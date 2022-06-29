@@ -4,6 +4,8 @@ import sun.security.util.ArrayUtil;
 
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Collection;
+import java.util.List;
 
 /**
  * Created by leon on 1/29/18.
@@ -76,7 +78,15 @@ public class StringArrayUtils {
      * @return true if the order of the array is the same backwards and forwards
      */ // TODO
     public static boolean isPalindromic(String[] array) {
-        return false;
+
+        String[] reversed = reverse(array);
+
+        for(int i = 0; i < array.length; i++) {
+            if (array[i].equals(reversed[i]) == false) {
+                return false;
+            }
+        }
+        return true;
     }
 
     /**
@@ -84,7 +94,32 @@ public class StringArrayUtils {
      * @return true if each letter in the alphabet has been used in the array
      */ // TODO
     public static boolean isPangramic(String[] array) {
-        return false;
+        String[] alpha = "abcdefghijklmnopqrstuvwxyz".split("");
+        ArrayList<String> letters = new ArrayList(Arrays.asList(alpha));
+
+        //For each string in the array, remove all letters in that string from list
+        for(int i = 0; i < array.length; i++){
+            removeLetters(letters, array[i]);
+        }
+
+        //if there are no letters left, then the array contained all letters. Otherwise, it was not pangramic
+        return letters.size() == 0;
+    }
+
+    public static List<String> removeLetters(ArrayList<String> letters, String value){
+        //Send string to lowercase, so we can still match any uppercase letters
+        value = value.toLowerCase();
+
+        //Examine each letter of the value string, remove them if they're in the letters list
+        for(int i = 0; i < value.length(); i++){
+            Character currentLetter = value.charAt(i); //Capture Current letter of value string
+            int indexOfLetterInList = letters.indexOf(currentLetter.toString()); //Get index of current letter in letters list
+            if(indexOfLetterInList >=0){  //If letter was in list, remove it
+                letters.remove((indexOfLetterInList));
+            }
+
+        }
+        return letters;
     }
 
     /**
@@ -93,7 +128,14 @@ public class StringArrayUtils {
      * @return number of occurrences the specified `value` has occurred
      */ // TODO
     public static int getNumberOfOccurrences(String[] array, String value) {
-        return 0;
+        int counter = 0;
+        for (int i = 0; i < array.length; i++) {
+            if (array[i].equals(value)) {
+                counter++;
+            }
+        }
+
+        return counter;
     }
 
     /**
@@ -102,10 +144,24 @@ public class StringArrayUtils {
      * @return array with identical contents excluding values of `value`
      */ // TODO
     public static String[] removeValue(String[] array, String valueToRemove) {
-        
+        /*
+        * Use the array to create an array list
+        * call .removeAll(valuetoRemove) on that created array list
+        * return yourArrayList.toArray()
+        * */
 
+
+        int size = array.length - getNumberOfOccurrences(array, valueToRemove);
+        int subIndex = 0;
+        String[] result = new String[size];
+
+        for(int i = 0; i < array.length; i++){
+            if(array[i] != valueToRemove){ //If this is a word we need to add
+                result[subIndex++] = array[i];
+            }
         }
 
+        return result;
     }
 
     /**
