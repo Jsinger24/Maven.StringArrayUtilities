@@ -169,22 +169,47 @@ public class StringArrayUtils {
      * @return array of Strings with consecutive duplicates removes
      */ // TODO
     public static String[] removeConsecutiveDuplicates(String[] array) {
-        int index = 0;
-        int j;
-        for (int i = 0; i < array.length; i++);
-        for (int j = 0; j < i; j++);
-        if (array[i] == array[j]){
-            break;
-        }
+            ArrayList<String> result = new ArrayList<String>();
+            String lastValue = array[array.length - 1];
+            for(int i = 0; i < array.length - 1; i++){
+                if(array[i] != array[i + 1]){
+                    result.add(array[i]);
+                }
+            }
+            if(result.get(result.size() -1) != lastValue) {
+                result.add(lastValue);
+            }
 
-    }
+            return result.toArray(new String[result.size()]);
+        }
 
     /**
      * @param array array of chars
      * @return array of Strings with each consecutive duplicate occurrence concatenated as a single string in an array of Strings
      */ // TODO
     public static String[] packConsecutiveDuplicates(String[] array) {
-        return null;
+       ArrayList<String> result = new ArrayList<String>();
+       String lastValue = array[array.length - 1];
+       String tempString = "";
+
+       for(int i = 0; i < array.length - 1; i++){
+           if(array[i] == array[i + 1]) {
+               tempString += array[i];
+           }
+               else {
+                   array[i] != array[i + 1];
+                   tempString += array[i];
+                   ArrayList.add(tempString);
+                   tempString = "";
+           }
+       }
+
+//             //After Loop
+                 //Since we dont' check last index in loop, determine if we need to
+            //a: Concatenate lastValue variable (line 194) onto current value at the last position of result
+            //b: Add lastValue variable to result (.add(lastValue) <----remember, look at tests
+
+        return result.toArray(new String[result.size()]);
     }
 
 
