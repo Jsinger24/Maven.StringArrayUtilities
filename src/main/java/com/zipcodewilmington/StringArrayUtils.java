@@ -1,6 +1,5 @@
 package com.zipcodewilmington;
 
-import sun.security.util.ArrayUtil;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -189,28 +188,43 @@ public class StringArrayUtils {
      */ // TODO
     public static String[] packConsecutiveDuplicates(String[] array) {
        ArrayList<String> result = new ArrayList<String>();
-       String lastValue = array[array.length - 1];
+       String lastValueInArray = array[array.length - 1];
        String tempString = "";
 
        for(int i = 0; i < array.length - 1; i++){
-           if(array[i] == array[i + 1]) {
-               tempString += array[i];
+           tempString += array[i];
+           if(array[i] != array[i + 1]) {
+               result.add(tempString);
+               tempString = "";
            }
-               else {
-                   array[i] != array[i + 1];
-                   tempString += array[i];
-                   ArrayList.add(tempString);
-                   tempString = "";
-           }
+
        }
 
 //             //After Loop
                  //Since we dont' check last index in loop, determine if we need to
             //a: Concatenate lastValue variable (line 194) onto current value at the last position of result
             //b: Add lastValue variable to result (.add(lastValue) <----remember, look at tests
+        //last valuie = e
+        //last thing in results is aaaa
+            Integer lastIndexInResult = result.size() -1;
+            String lastValueInResult = result.get(lastIndexInResult);
+            if(tempString.length() > 0 && lastValueInResult != tempString){
+                result.add(tempString);
+                lastValueInResult = tempString;
+                lastIndexInResult++;
+            }
+
+            if(lastValueInResult.contains(lastValueInArray)){
+                result.set(lastIndexInResult, lastValueInResult + lastValueInArray);
+            } else {
+                result.add(lastValueInArray);
+            }
 
         return result.toArray(new String[result.size()]);
+
     }
+
+
 
 
 }
